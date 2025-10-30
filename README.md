@@ -2,15 +2,46 @@
 
 Современное веб и мобильное приложение для обмена книгами с другими пользователями и общения в чате.
 
+> **Версия 2.0** включает темную тему, систему друзей, встроенную читалку книг и современный Glassmorphism дизайн!
+
 ## ✨ Функционал
 
 - 📖 **Публичная библиотека** - просмотр и поиск книг от всех пользователей
 - 📤 **Загрузка книг** - добавление собственных книг с обложками
 - 🤝 **Обмен книгами** - делитесь книгами с конкретными пользователями
-- 💬 **Чат** - общайтесь с другими пользователями
-- 🎨 **Современный UI** - красивый дизайн на Tailwind CSS
+- 👥 **Система друзей** - добавляйте друзей и управляйте запросами
+- 💬 **Чат** - общайтесь с друзьями в реальном времени
+- 📚 **Читалка книг** - встроенный просмотр с масштабированием
+- 🌓 **Темная/светлая тема** - переключение с сохранением предпочтений
+- 🎨 **Современный UI** - Glassmorphism дизайн с анимациями
 - 📱 **Android приложение** - нативное мобильное приложение через Capacitor
 - ☁️ **Cloudflare Backend** - serverless API на Workers + D1 + R2
+
+## 🎯 Основные возможности
+
+### 👥 Система друзей
+- **Поиск пользователей** по имени и email
+- **Отправка запросов** в друзья
+- **Управление друзьями** - принятие/отклонение запросов
+- **Быстрый доступ** к чату и книгам друга
+
+### 📚 Читалка книг
+- **Встроенный просмотр** с масштабированием (50-200%)
+- **Полноэкранный режим** для комфортного чтения
+- **Постраничная навигация** (в разработке)
+- Готовность к PDF/EPUB интеграции
+
+### 🌓 Темная/светлая тема
+- **Переключатель** в правом верхнем углу
+- **Автосохранение** выбранной темы в localStorage
+- **Плавные переходы** между темами
+- **Адаптированная цветовая схема** для каждой темы
+
+### 🎨 Современный дизайн
+- **Glassmorphism** эффекты с backdrop-blur
+- **Градиентные кнопки** и анимации
+- **Framer Motion** для плавных переходов
+- **Адаптивная верстка** для всех устройств
 
 ## 🚀 Быстрый старт
 
@@ -84,18 +115,23 @@ planer/
 ├── src/
 │   ├── components/      # React компоненты
 │   │   ├── Layout.tsx      # Главный лейаут с навигацией
-│   │   └── BookCard.tsx    # Карточка книги
+│   │   ├── BookCard.tsx    # Карточка книги
+│   │   ├── BookReader.tsx  # Читалка книг
+│   │   └── ThemeToggle.tsx # Переключатель темы
 │   ├── contexts/        # React Context для состояния
 │   │   ├── AuthContext.tsx     # Аутентификация
 │   │   ├── BooksContext.tsx    # Управление книгами
-│   │   └── ChatContext.tsx     # Чат
+│   │   ├── ChatContext.tsx     # Чат
+│   │   ├── FriendsContext.tsx  # Система друзей
+│   │   └── ThemeContext.tsx    # Темная/светлая тема
 │   ├── pages/          # Страницы приложения
 │   │   ├── Login.tsx       # Вход/Регистрация
 │   │   ├── Library.tsx     # Публичная библиотека
 │   │   ├── BookDetail.tsx  # Детали книги
 │   │   ├── MyBooks.tsx     # Мои книги
 │   │   ├── Upload.tsx      # Загрузка книг
-│   │   └── Chat.tsx        # Чат
+│   │   ├── Chat.tsx        # Чат
+│   │   └── Friends.tsx     # Управление друзьями
 │   ├── types/          # TypeScript типы
 │   └── App.tsx         # Главный компонент
 ├── worker/             # Cloudflare Worker (Backend API)
@@ -112,18 +148,20 @@ planer/
 - **React 19** - UI библиотека
 - **TypeScript** - Типизация
 - **Vite** - Сборщик и dev server
-- **Tailwind CSS** - Стилизация
+- **Tailwind CSS** - Стилизация с Glassmorphism
 - **React Router** - Маршрутизация
+- **Framer Motion** - Анимации и переходы
 - **Lucide React** - Иконки
 - **date-fns** - Работа с датами
+- **react-pdf** - Просмотр PDF (готово к интеграции)
 
 ### Mobile
 - **Capacitor** - Нативные мобильные приложения
 
 ### Backend
 - **Cloudflare Workers** - Serverless functions
-- **D1** - SQLite база данных
-- **R2** - Object storage для файлов
+- **D1** - SQLite база данных (5 таблиц с индексами)
+- **R2** - Object storage для обложек и файлов книг
 
 ## 📡 API Endpoints
 
@@ -146,11 +184,15 @@ planer/
 ## 📝 База данных (D1)
 
 Схема включает таблицы:
-- `users` - Пользователи
-- `books` - Книги
-- `book_shares` - Доступ к книгам
-- `messages` - Сообщения
-- `share_requests` - Запросы на доступ
+- `users` - Пользователи (id, username, email, password_hash, avatar, created_at)
+- `books` - Книги (id, title, author, description, cover_url, file_url, uploaded_by, uploaded_at, genre, pages, language, is_public)
+- `book_shares` - Доступ к книгам (id, book_id, user_id, shared_at)
+- `messages` - Сообщения (id, sender_id, receiver_id, content, timestamp, read)
+- `share_requests` - Запросы на доступ (id, book_id, from_user_id, to_user_id, status, created_at)
+
+Индексы для оптимизации:
+- Индексы на внешние ключи
+- Индексы на часто используемые поля (uploaded_by, is_public, timestamp)
 
 ## 🔧 Разработка
 
@@ -170,7 +212,9 @@ planer/
 
 ### Ошибки сборки
 - Убедитесь что все зависимости установлены: `npm install`
-- Очистите кэш: `rm -rf node_modules dist && npm install`
+- Очистите кэш и переустановите:
+  - Windows: `rmdir /s /q node_modules dist && npm install`
+  - Linux/Mac: `rm -rf node_modules dist && npm install`
 
 ### Android не собирается
 - Проверьте версию Java: `java -version` (нужна 17+)
@@ -182,76 +226,30 @@ planer/
 - Убедитесь что D1 база создана и схема применена
 - Проверьте database_id в wrangler.jsonc
 
+## 📚 Дополнительная документация
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Быстрый старт для новичков
+- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Полное резюме проекта
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Подробное руководство по развертыванию
+- **[CAPACITOR.md](CAPACITOR.md)** - Гайд по Capacitor и мобильной разработке
+- **[NEW_FEATURES.md](NEW_FEATURES.md)** - Описание новых функций v2.0
+- **[CHANGELOG.md](CHANGELOG.md)** - История изменений
+
+## 📊 Статистика проекта
+
+- **Страницы**: 7 (Login, Library, BookDetail, MyBooks, Upload, Chat, Friends)
+- **Компоненты**: 4 (Layout, BookCard, BookReader, ThemeToggle)
+- **Контексты**: 5 (Auth, Books, Chat, Friends, Theme)
+- **API Endpoints**: 9
+- **Таблицы БД**: 5
+- **Строк кода**: ~2500+
+
 ## 📄 Лицензия
 
 MIT
 
 ## 👥 Автор
 
-Создано для курсового проекта
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Создано для курсового проекта  
+**Дата создания**: 30 октября 2025  
+**Версия**: 2.0
