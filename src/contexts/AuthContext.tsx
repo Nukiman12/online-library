@@ -33,9 +33,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         username: 'DemoUser',
         email: email,
         avatar: `https://ui-avatars.com/api/?name=${email}&background=0ea5e9&color=fff`,
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
         friends: ['2', '4'],
-        friendRequests: ['3'],
+        friend_requests: ['3'],
       };
       setUser(mockUser);
       localStorage.setItem('user', JSON.stringify(mockUser));
@@ -56,9 +56,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         username,
         email,
         avatar: `https://ui-avatars.com/api/?name=${username}&background=0ea5e9&color=fff`,
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
         friends: [],
-        friendRequests: [],
+        friend_requests: [],
       };
       setUser(mockUser);
       localStorage.setItem('user', JSON.stringify(mockUser));

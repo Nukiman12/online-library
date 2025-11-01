@@ -126,7 +126,7 @@ const Chat: React.FC = () => {
                 {/* Messages */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
                   {messages.map(message => {
-                    const isOwn = message.senderId === user?.id;
+                    const isOwn = message.sender_id === user?.id;
                     return (
                       <div
                         key={message.id}

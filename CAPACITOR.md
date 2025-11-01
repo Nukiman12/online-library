@@ -98,3 +98,5 @@ In Android Studio: View → Tool Windows → Logcat
 - [Android Developer Guide](https://developer.android.com/guide)
 - [Capacitor Plugins](https://capacitorjs.com/docs/plugins)
 
+
+

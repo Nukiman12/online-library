@@ -13,9 +13,9 @@ const BookCard: React.FC<BookCardProps> = ({ book, onShare, onDownload }) => {
   return (
     <div className="card overflow-hidden">
       <div className="relative h-64 bg-gray-200">
-        {book.coverUrl ? (
+        {book.cover_url ? (
           <img
-            src={book.coverUrl}
+            src={book.cover_url}
             alt={book.title}
             className="w-full h-full object-cover"
           />
@@ -60,7 +60,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onShare, onDownload }) => {
               <Share2 className="w-4 h-4" />
             </button>
           )}
-          {onDownload && book.fileUrl && (
+          {onDownload && book.file_url && (
             <button
               onClick={() => onDownload(book.id)}
               className="btn-secondary text-sm p-2"

@@ -16,7 +16,7 @@ const Upload: React.FC = () => {
     genre: 'Классика',
     pages: '',
     language: 'Русский',
-    isPublic: true,
+    is_public: true,
   });
 
   const [coverFile, setCoverFile] = useState<File | null>(null);
@@ -40,10 +40,10 @@ const Upload: React.FC = () => {
     addBook({
       ...formData,
       pages: parseInt(formData.pages) || undefined,
-      coverUrl,
-      fileUrl,
-      uploadedBy: user.id,
-      sharedWith: [],
+      cover_url: coverUrl,
+      file_url: fileUrl,
+      uploaded_by: user.id,
+      shared_with: [],
     });
 
     alert('Книга успешно загружена!');
@@ -210,12 +210,12 @@ const Upload: React.FC = () => {
           <div className="flex items-center">
             <input
               type="checkbox"
-              id="isPublic"
-              checked={formData.isPublic}
-              onChange={(e) => setFormData({ ...formData, isPublic: e.target.checked })}
+              id="is_public"
+              checked={formData.is_public}
+              onChange={(e) => setFormData({ ...formData, is_public: e.target.checked })}
               className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
             />
-            <label htmlFor="isPublic" className="ml-2 text-sm text-gray-700">
+            <label htmlFor="is_public" className="ml-2 text-sm text-gray-700">
               Сделать книгу публичной (доступна всем пользователям)
             </label>
           </div>
@@ -241,4 +241,6 @@ const Upload: React.FC = () => {
 };
 
 export default Upload;
+
+
 

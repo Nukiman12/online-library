@@ -35,56 +35,56 @@ export const FriendsProvider: React.FC<{ children: React.ReactNode }> = ({ child
         username: 'Анна Смирнова',
         email: 'anna@example.com',
         avatar: 'https://ui-avatars.com/api/?name=Anna+Smirnova&background=6366f1&color=fff',
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
         bio: 'Люблю классическую литературу',
         friends: ['1'],
-        friendRequests: [],
+        friend_requests: [],
       },
       {
         id: '3',
         username: 'Дмитрий Петров',
         email: 'dmitry@example.com',
         avatar: 'https://ui-avatars.com/api/?name=Dmitry+Petrov&background=ec4899&color=fff',
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
         bio: 'Фанат научной фантастики',
         friends: [],
-        friendRequests: ['1'],
+        friend_requests: ['1'],
       },
       {
         id: '4',
         username: 'Елена Волкова',
         email: 'elena@example.com',
         avatar: 'https://ui-avatars.com/api/?name=Elena+Volkova&background=10b981&color=fff',
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
         bio: 'Читаю детективы',
         friends: ['1'],
-        friendRequests: [],
+        friend_requests: [],
       },
       {
         id: '5',
         username: 'Иван Кузнецов',
         email: 'ivan@example.com',
         avatar: 'https://ui-avatars.com/api/?name=Ivan+Kuznetsov&background=f59e0b&color=fff',
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
         bio: 'Обожаю исторические романы',
         friends: [],
-        friendRequests: [],
+        friend_requests: [],
       },
     ];
     setAllUsers(mockUsers);
   }, []);
 
   const friends = allUsers.filter(user => user.friends.includes(currentUserId));
-  const friendRequests = allUsers.filter(user => user.friendRequests.includes(currentUserId));
+  const friendRequests = allUsers.filter(user => user.friend_requests.includes(currentUserId));
   const sentRequests = allUsers.filter(user => 
-    allUsers.find(u => u.id === currentUserId)?.friendRequests.includes(user.id)
+    allUsers.find(u => u.id === currentUserId)?.friend_requests.includes(user.id)
   );
 
   const addFriend = (userId: string) => {
     setAllUsers(users => 
       users.map(user => 
         user.id === userId 
-          ? { ...user, friendRequests: [...user.friendRequests, currentUserId] }
+          ? { ...user, friend_requests: [...user.friend_requests, currentUserId] }
           : user
       )
     );
@@ -97,14 +97,14 @@ export const FriendsProvider: React.FC<{ children: React.ReactNode }> = ({ child
           return {
             ...user,
             friends: [...user.friends, currentUserId],
-            friendRequests: user.friendRequests.filter(id => id !== currentUserId),
+            friend_requests: user.friend_requests.filter(id => id !== currentUserId),
           };
         }
         if (user.id === currentUserId) {
           return {
             ...user,
             friends: [...user.friends, userId],
-            friendRequests: user.friendRequests.filter(id => id !== userId),
+            friend_requests: user.friend_requests.filter(id => id !== userId),
           };
         }
         return user;
@@ -116,7 +116,7 @@ export const FriendsProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setAllUsers(users => 
       users.map(user => 
         user.id === currentUserId
-          ? { ...user, friendRequests: user.friendRequests.filter(id => id !== userId) }
+          ? { ...user, friend_requests: user.friend_requests.filter(id => id !== userId) }
           : user
       )
     );
@@ -156,4 +156,6 @@ export const FriendsProvider: React.FC<{ children: React.ReactNode }> = ({ child
     </FriendsContext.Provider>
   );
 };
+
+
 

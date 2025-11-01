@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "planer",
+	"name": "online-library",
 	"main": "worker/index.ts",
 	"compatibility_date": "2025-10-29",
 	"assets": {
@@ -20,7 +20,7 @@
 		{
 			"binding": "DB",
 			"database_name": "library-db",
-			"database_id": "your-d1-database-id"
+			"database_id": "e30aa6d2-07b6-44de-a4b7-d7e5ba9f44e0"
 		}
 	],
 	/**
@@ -31,7 +31,7 @@
 			"binding": "BOOKS_BUCKET",
 			"bucket_name": "library-books"
 		}
-	]
+	],
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

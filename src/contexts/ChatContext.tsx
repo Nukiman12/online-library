@@ -34,9 +34,9 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             username: 'Анна',
             email: 'anna@example.com',
             avatar: 'https://ui-avatars.com/api/?name=Anna&background=0ea5e9&color=fff',
-            createdAt: new Date().toISOString(),
+            created_at: new Date().toISOString(),
             friends: ['1'],
-            friendRequests: [],
+            friend_requests: [],
           },
         ],
         unreadCount: 2,
@@ -47,16 +47,16 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const mockMessages: Message[] = [
       {
         id: '1',
-        senderId: '2',
-        receiverId: '1',
+        sender_id: '2',
+        receiver_id: '1',
         content: 'Привет! Ты читал "Войну и мир"?',
         timestamp: new Date(Date.now() - 3600000).toISOString(),
         read: false,
       },
       {
         id: '2',
-        senderId: '1',
-        receiverId: '2',
+        sender_id: '1',
+        receiver_id: '2',
         content: 'Да, отличная книга!',
         timestamp: new Date(Date.now() - 1800000).toISOString(),
         read: true,
@@ -68,8 +68,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const sendMessage = (receiverId: string, content: string) => {
     const newMessage: Message = {
       id: Date.now().toString(),
-      senderId: '1', // TODO: use actual user ID
-      receiverId,
+      sender_id: '1', // TODO: use actual user ID
+      receiver_id: receiverId,
       content,
       timestamp: new Date().toISOString(),
       read: false,
@@ -83,8 +83,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     const participantIds = chat.participants.map(p => p.id);
     return messages.filter(
-      m => (m.senderId === '1' && participantIds.includes(m.receiverId)) ||
-           (m.receiverId === '1' && participantIds.includes(m.senderId))
+      m => (m.sender_id === '1' && participantIds.includes(m.receiver_id)) ||
+           (m.receiver_id === '1' && participantIds.includes(m.sender_id))
     );
   };
 

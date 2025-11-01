@@ -56,9 +56,9 @@ const BookDetail: React.FC = () => {
         <div className="md:flex">
           {/* Cover Image */}
           <div className="md:w-1/3 bg-gray-200">
-            {book.coverUrl ? (
+            {book.cover_url ? (
               <img
-                src={book.coverUrl}
+                src={book.cover_url}
                 alt={book.title}
                 className="w-full h-full object-cover"
               />
@@ -94,11 +94,11 @@ const BookDetail: React.FC = () => {
               </div>
               <div className="flex items-center text-gray-600">
                 <Calendar className="w-5 h-5 mr-2" />
-                <span>{new Date(book.uploadedAt).toLocaleDateString('ru-RU')}</span>
+                <span>{new Date(book.uploaded_at).toLocaleDateString('ru-RU')}</span>
               </div>
               <div className="flex items-center text-gray-600">
                 <User className="w-5 h-5 mr-2" />
-                <span>Загрузил: User #{book.uploadedBy}</span>
+                <span>Загрузил: User #{book.uploaded_by}</span>
               </div>
             </div>
 
@@ -166,8 +166,8 @@ const BookDetail: React.FC = () => {
       {/* Book Reader */}
       {showReader && book && (
         <BookReader
-          fileUrl={book.fileUrl}
-          fileData={book.fileData}
+          fileUrl={book.file_url}
+          fileData={book.file_data}
           title={book.title}
           onClose={() => setShowReader(false)}
         />
