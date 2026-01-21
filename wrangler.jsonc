@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "online-library",
+	"name": "onlab",
 	"main": "worker/index.ts",
 	"compatibility_date": "2025-10-29",
 	"assets": {
